@@ -1,26 +1,40 @@
 #!/bin/bash
 # Author Lubos Rendek <web@linuxconfig.org>
 
-# If no argument supplied, start 20 random question multiplication practice test. 
-
-if [ -z $1 ]; then 
-    num=20
-else 
-    if ! [[ $1 =~ ^-?[0-9]+$ ]] ; then # Sanity check for a valid interger argument.
-        echo "Supplied argument is not a valid number. Please try again!" >&2; exit 1
-    fi
-    num=$1
-fi
-
-# This variable holds the amount of wrong answers.
 errors=0
+num=20
+question_str="product"
 
-# Create an array of 100 questions and answers.
+# Create an array of 100 multiplication questions and answers as a default.
 for j in $( seq 1 10); do 
     for i in $( seq 1 10); do 
         questions[((element++))]="$i x $j=$(($i*$j))"
     done
 done
+
+# Parse command line options options
+while getopts 'dq:' OPTION; do
+    case "$OPTION" in
+    d)
+        questions=() # Clear questions array
+        element=0 
+        question_str="division"
+        for j in $( seq 1 10); do 
+            for i in $( seq 1 10); do 
+                questions[((element++))]="$(($i*$j)) : $j=$(($(($i*$j))/$j))"
+            done
+        done
+        ;;
+    q)
+        num=$OPTARG 
+        ;;
+    ?)
+        echo "script usage: $(basename $0) [-d] [-q total_questios]" >&2
+        exit 1
+        ;;
+    esac
+done
+shift "$(($OPTIND -1))"
 
 # Function to grab a random question from pool.
 function get_question {
@@ -35,7 +49,7 @@ function get_question {
 function print_question {
 
     echo "################################"
-    printf "\033[0;36mWhat is the product of $question ?\e[0m\n"
+    printf "\033[0;36mWhat is the $question_str of $question ?\e[0m\n"
     echo -n "Your answer: "
 }
 
@@ -76,5 +90,5 @@ until [  $num -eq 0 ]; do
     get_question; ask_question;
 done
 
-echo "Congratulations, your multiplication practice test is finished!!!"
+# echo "Congratulations, your practice test is finished!!!"
 echo "Wrong answers: $errors"
