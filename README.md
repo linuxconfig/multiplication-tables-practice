@@ -1,5 +1,5 @@
 # Arithmetic Practice Script for Children
-This script provides an simple command line arthmetic test for multiplication and division
+This script provides a simple command line arthmetic test for multiplication and division
 
 Script's homepage: [Arithmetic Practice Script for Children](https://linuxconfig.org/children-multiplication-tables-practice-test-with-bash-script-on-linux)
 
