@@ -13,15 +13,25 @@ for j in $( seq 1 10); do
 done
 
 # Parse command line options options
-while getopts 'dq:' OPTION; do
+while getopts 'daq:' OPTION; do
     case "$OPTION" in
-    d)
+    d) # Division
         questions=() # Clear questions array
         element=0 
         question_str="division"
         for j in $( seq 1 10); do 
             for i in $( seq 1 10); do 
                 questions[((element++))]="$(($i*$j)) : $j=$(($(($i*$j))/$j))"
+            done
+        done
+        ;;
+    a) # Addition
+        questions=() # Clear questions array
+        element=0 
+        question_str="sum"
+        for j in $( seq 1 10); do 
+            for i in $( seq 1 10); do 
+                questions[((element++))]="$i + $j=$(($i+$j))"
             done
         done
         ;;
