@@ -4,6 +4,8 @@
 errors=0
 num=20
 question_str="product"
+random_range=100
+result=-1
 
 # Create an array of 100 multiplication questions and answers as a default.
 for j in $( seq 1 10); do 
@@ -13,7 +15,7 @@ for j in $( seq 1 10); do
 done
 
 # Parse command line options options
-while getopts 'daq:' OPTION; do
+while getopts 'dasq:' OPTION; do
     case "$OPTION" in
     d) # Division
         questions=() # Clear questions array
@@ -35,6 +37,20 @@ while getopts 'daq:' OPTION; do
             done
         done
         ;;
+    s) # Subtraction
+        questions=() # Clear questions array
+        element=0 
+        question_str="result"
+        random_range=55
+        for j in $( seq 1 10); do 
+            for i in $( seq 1 10); do 
+                item=$( echo "$i - $j=$(($i-$j))" | grep -v "=-")
+                if [ ! -z "$item" ]; then
+                    questions[((element++))]=$item
+                fi
+            done
+        done
+        ;;
     q)
         num=$OPTARG 
         ;;
@@ -49,7 +65,7 @@ shift "$(($OPTIND -1))"
 # Function to grab a random question from pool.
 function get_question {
 
-    rand=$(( ( RANDOM % 100 )  + 1 ))
+    rand=$(( ( RANDOM % $random_range )  + 1 ))
     question=$(echo ${questions[$rand]} | cut -d = -f1)
     result=$(echo ${questions[$rand]} | cut -d = -f2)
 
@@ -67,7 +83,6 @@ function print_question {
 function ask_question {
 
 response=0
-
 while [ $response -ne $result ]; do 
 
     
