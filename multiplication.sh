@@ -122,4 +122,4 @@ m="$(( (SECONDS - start) / 60))"
 sl="$(((SECONDS - start) % 60))"                                                                                                                                                                                                              
 minutes=$(printf %02d $m)                                                                                                                                                                                                                     
 seconds=$(printf %02d $sl)                                                                                                                                                                                                                    
-echo "You answered 20 questions in $minutes:$seconds with $errors incorrect answers."     
+echo "You answered $num questions in $minutes:$seconds with $errors incorrect answers."     
