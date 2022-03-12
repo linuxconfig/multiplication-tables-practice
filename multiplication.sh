@@ -6,6 +6,7 @@ num=20
 question_str="product"
 random_range=100
 result=-1
+start=$SECONDS
 
 # Create an array of 100 multiplication questions and answers as a default.
 for j in $( seq 1 10); do 
@@ -116,4 +117,9 @@ until [  $num -eq 0 ]; do
 done
 
 # echo "Congratulations, your practice test is finished!!!"
-echo "Wrong answers: $errors"
+s="$((SECONDS - start))"                                                                                                                                                                                                                      
+m="$(( (SECONDS - start) / 60))"                                                                                                                                                                                                              
+sl="$(((SECONDS - start) % 60))"                                                                                                                                                                                                              
+minutes=$(printf %02d $m)                                                                                                                                                                                                                     
+seconds=$(printf %02d $sl)                                                                                                                                                                                                                    
+echo "You answered 20 questions in $minutes:$seconds with $errors incorrect answers."     
