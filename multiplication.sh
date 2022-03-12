@@ -111,6 +111,7 @@ done
 
 }
 
+start_num=$num
 # Main while loop to process the requested number of questions.
 until [  $num -eq 0 ]; do
     get_question; ask_question;
@@ -122,4 +123,4 @@ m="$(( (SECONDS - start) / 60))"
 sl="$(((SECONDS - start) % 60))"                                                                                                                                                                                                              
 minutes=$(printf %02d $m)                                                                                                                                                                                                                     
 seconds=$(printf %02d $sl)                                                                                                                                                                                                                    
-echo "You answered $num questions in $minutes:$seconds with $errors incorrect answers."     
+echo "You answered $start_num questions in $minutes:$seconds with $errors incorrect answers."     
